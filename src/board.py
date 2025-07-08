@@ -8,7 +8,7 @@ Board class for Nonogram game
 import numpy as np
 from time import sleep
 
-SLEEP_AFTER_CHANGE = 0  # seconds to wait after a change in the board
+SLEEP_AFTER_CHANGE = 0 
 
 class Board:
     """
@@ -30,7 +30,7 @@ class Board:
         self.board = np.array([[-1 for _ in range(size_x)] for _ in range(size_y)])
         self.row_clues = []
         self.col_clues = []
-        self.SLEEP_AFTER_CHANGE = SLEEP_AFTER_CHANGE  # Set the sleep time after a change
+        self.SLEEP_AFTER_CHANGE = SLEEP_AFTER_CHANGE 
         self.PRINT_AFTER_CHANGE = False
 
     def gen_clues(self):
@@ -44,7 +44,6 @@ class Board:
         self.row_clues = []
         self.col_clues = []
 
-        # Generate row clues
         for i in range(self.size_y):
             row = self.board[i]
             clues = []
@@ -58,8 +57,7 @@ class Board:
             if count > 0:
                 clues.append(count)
             self.row_clues.append(clues)
-
-        # Generate column clues
+            
         for j in range(self.size_x):
             col = self.board[:, j]
             clues = []
@@ -112,7 +110,7 @@ class Board:
         :param type: Type of data to load, either "clue" or "map"
         """
 
-        b = Board(0, 0)  # Create an empty board to load data into
+        b = Board(0, 0) 
         with open(filename, 'r') as file:
             if type == "map":
                 map_data = [list(map(int, line.split())) for line in file]
@@ -133,42 +131,34 @@ class Board:
                 b.col_clues = [list(map(int, clue.split())) for clue in file.readline().strip().split(',')]
                 return b
 
-        
-
     def check_clues(self):
         """
         Check if the current board state matches the clues.
         
         :return: True if the board matches the clues, False otherwise
         """
-        return self.row_clues == [self._generate_clue(row) for row in self.board] and \
-               self.col_clues == [self._generate_clue(self.board[:, col]) for col in range(self.size_x)]
+        return self.row_clues == [self._generate_clue(row) for row in self.board] and self.col_clues == [self._generate_clue(self.board[:, col]) for col in range(self.size_x)]
     
     def hasChanged(self):
         """
-        Function to be run when the board has changed. Will print the current state of the board.
+        Function to be run when the board has changed. 
         """
 
         if self.PRINT_AFTER_CHANGE: 
             print(self)
         sleep(self.SLEEP_AFTER_CHANGE)  
-    
-    #region 
 
     def __str__(self):
         """
         Returns a string representation of the board with row and column clues.
         Filled cell = █, Empty = ·, Unknown = space
         """
-        # Ensure clues are up to date
         if not self.row_clues or not self.col_clues:
             self.gen_clues()
 
-        # Determine max number of clues in rows and columns
         max_row_clues = max(len(clue) for clue in self.row_clues)
         max_col_clues = max(len(clue) for clue in self.col_clues)
 
-        # Pad column clues to be printed vertically
         padded_col_clues = []
         for i in range(max_col_clues):
             line = []
@@ -181,11 +171,9 @@ class Board:
 
         lines = []
 
-        # Build column clue lines
         for line in padded_col_clues:
             lines.append(" " * (max_row_clues * 3) + " ".join(f"{x:>2}" for x in line))
 
-        # Build each row line with clues
         for row_idx, row in enumerate(self.board):
             row_clue_str = " ".join(f"{x:>2}" for x in self.row_clues[row_idx])
             row_clue_str = row_clue_str.rjust(max_row_clues * 3)
