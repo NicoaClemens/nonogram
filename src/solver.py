@@ -59,20 +59,15 @@ def solve_nonogram(board: Board):
             row_clue = board.row_clues[i]
             row = board.board[i]
             
-            # Generate all possible configurations for the current row
             possibilities, _ = generate_line_possibilities(board.size_x, row_clue)
 
-            # Filter possibilities that are consistent with the current row
             possibilities = [p for p in possibilities if possibility_matches_current(p, row)]
 
-            # If there are no possibilities, continue to the next row
             if not possibilities:
                 continue
            
-            # Create a consensus array for the current row
             consensus = consensus_array(possibilities)
             
-            # Check if the consensus is different from the current row
             if not np.array_equal(consensus, row):
                 board.board[i] = consensus
                 hasChangedAnything = True
@@ -84,26 +79,20 @@ def solve_nonogram(board: Board):
             col_clue = board.col_clues[j]
             col = board.board[:, j]
             
-            # Generate all possible configurations for the current column
             possibilities, _ = generate_line_possibilities(board.size_y, col_clue)            
 
-            # Filter possibilities that are consistent with the current column
             possibilities = [p for p in possibilities if possibility_matches_current(p, col)]
 
-            # If there are no possibilities, continue to the next column
             if not possibilities:
                 continue
             
-            # Create a consensus array for the current column
             consensus = consensus_array(possibilities)
             
-            # Check if the consensus is different from the current column
             if not np.array_equal(consensus, col):
                 board.board[:, j] = consensus
                 hasChangedAnything = True
                 board.hasChanged()
 
-    # After processing all rows and columns, check if the board is fully solved
     if np.all(board.board != -1):
         return board, True
     else:
