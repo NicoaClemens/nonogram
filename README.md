@@ -1,6 +1,6 @@
 # NONOGRAM SOLVER 
 
-Basic nonogram solver. Maybe won't work for boards that need trial and error / backtracking, not sure. Might pretend like the board is solveable and solved even if the clues contradict each other. 
+Basic nonogram solver. Maybe won't work for boards that need trial and error / backtracking, not sure. Might pretend like the board is solveable and solved even if the clues contradict each other. If clues don't contradict each other but board is still unsolveable it should always return 
 
 ## HOW TO USE
 
@@ -8,7 +8,7 @@ Example useage of file in `/src/main.py`.
 
 `/src/board.py` has basic handling for the board
 
-`/src/solver.py` has the actual solver algorithm.
+`/src/solver.py` has the actual solver algorithm, `solve_nonogram()`.
 
 ### txt file formats for `board.loadfile()`
 
