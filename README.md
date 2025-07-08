@@ -1,6 +1,6 @@
 # NONOGRAM SOLVER 
 
-Basic nonogram solver. Maybe won't work for boards that need trial and error / backtracking, not sure. Might pretend like the board is solveable and solved even if the clues contradict each other. If clues don't contradict each other but board is still unsolveable it should always return 
+Basic nonogram solver. Maybe won't work for boards that need trial and error / backtracking, not sure. Might pretend like the board is solveable and solved even if the clues contradict each other. If clues don't contradict each other but board is still unsolveable it should always return that the board is not solveable
 
 ## HOW TO USE
 
